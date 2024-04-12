@@ -6,9 +6,9 @@ pipeline{
         scannerHome = tool "sonar-scanner"
     }
     stages{
-        stage("git checkout"){
+        stage("Checkout"){
             steps{
-                sh 'branch': 'main' url: "https://github.com/lloyd-theophilus/end-to-end-kubernetes-game-deployment.git"
+                git branch: 'main' url: "https://github.com/lloyd-theophilus/end-to-end-kubernetes-game-deployment.git"
             }
             
         }
