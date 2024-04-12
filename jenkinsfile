@@ -8,7 +8,7 @@ pipeline{
     stages{
         stage("Checkout"){
             steps{
-                git branch: 'main' url: "https://github.com/lloyd-theophilus/end-to-end-kubernetes-game-deployment.git"
+                git branch: 'main', url: "https://github.com/lloyd-theophilus/end-to-end-kubernetes-game-deployment.git"
             }
             
         }
