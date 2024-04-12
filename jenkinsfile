@@ -1,11 +1,16 @@
 pipeline{
-    agent{
-        label "node21"
-    }
-    environment {
-        scannerHome = tool "sonar-scanner"
+    agent any
+
+    tools {
+        node 'node21'
     }
     stages{
+        stage("clean workspace"){
+            steps{
+               cleanWs()
+            }
+            
+        }
         stage("Checkout"){
             steps{
                 git branch: 'main', url: "https://github.com/lloyd-theophilus/end-to-end-kubernetes-game-deployment.git"
