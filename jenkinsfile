@@ -1,0 +1,17 @@
+pipeline{
+    agent{
+        label "node21"
+    }
+    environment {
+        scannerHome = tool "sonar-scanner"
+    }
+    stages{
+        stage("git checkout"){
+            steps{
+                sh 'branch': 'main' url: "https://github.com/lloyd-theophilus/end-to-end-kubernetes-game-deployment.git"
+            }
+            
+        }
+    }
+    
+}

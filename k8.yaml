@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: game-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: game
+  template:
+    metadata:
+      labels:
+        app: game
+    spec:
+      containers:
+        - name: game
+          image: your-image-name
+          ports:
+            - containerPort: 3000
+          resources:
+          limits:
+            cpu: "500m" # Maximum of 0.5 CPU cores
+            memory: "512Mi" # Maximum of 512MB memory
+          requests:
+            cpu: "200m" # Request 0.2 CPU cores
+            memory: "256Mi" # Request 256MB memory
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: game-service
+spec:
+  selector:
+    app: game
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer
