@@ -31,6 +31,25 @@ pipeline{
             }
             
         }
+        stage("quality gate"){
+           steps {
+                script {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token' 
+                }
+            } 
+        }
+        stage("Docker Build Image"){
+            steps{
+                script{
+                   withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
+                       sh "docker build -t gameapp ."
+                       sh "docker tag gameapp lloyddigital/gameapp:latest "
+                       sh "docker push lloyddigital/gameapp:latest "
+                    }
+                }
+            }
+            
+        }
 
     }
 }
