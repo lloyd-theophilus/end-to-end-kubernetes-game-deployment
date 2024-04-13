@@ -23,9 +23,9 @@ pipeline{
         stage("Code Analysis"){
             steps{
                 withSonarQubeEnv('sonar-server') {
-                    sh" $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Game App \
+                    sh" $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=GameApp \
                             -Dsonar.java.binaries=. \
-                            -Dsonar.projectKey=Game App \
+                            -Dsonar.projectKey=GameApp \
                             -Dsonar.sources=. "
                 }
             }
