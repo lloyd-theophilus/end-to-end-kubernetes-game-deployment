@@ -8,7 +8,7 @@ pipeline{
         SCANNER_HOME=tool 'sonar-scanner'
         DATE = new Date().format('yy.M')
         TAG = "${DATE}.${BUILD_NUMBER}"
-        DOCKER_BUILDKIT='1'
+        //DOCKER_BUILDKIT='1'
         APP_NAME = "Game_App"
     }
     stages{
