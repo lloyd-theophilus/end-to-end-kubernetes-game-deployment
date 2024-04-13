@@ -49,16 +49,19 @@ pipeline{
         }
         stage("Docker Build Image"){
             steps{
-                script{
-                   withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
-                       //sh "docker build -t gameapp ."
-                       sh 'docker build --build-arg BUILD_ENV=test -t lloyddigital/gameapp:${TAG} .'
-                       sh "docker tag gameapp lloyddigital/gameapp:${TAG} "
-                       sh "docker push lloyddigital/gameapp:${TAG} "
-                    }
-                }
+                sh 'docker build --build-arg BUILD_ENV=test -t lloyddigital/gameapp:${TAG} .'
             }
             
+        }
+        stage('Push Image') {
+           
+            steps {
+                sh 'docker login --username=$DOCKERUHB_USER --password=$DOCKERHUB_PASS'
+                sh "docker tag gameapp lloyddigital/gameapp:${TAG} "
+                sh "docker push lloyddigital/gameapp:${TAG} "
+                
+                
+            }
         }
 
     }
