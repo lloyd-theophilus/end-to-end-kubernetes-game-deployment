@@ -45,7 +45,7 @@ pipeline{
         stage('OWASP FS SCAN') {
             steps {
                 dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
-                dependencyCheckPublisher pattern:
+                //dependencyCheckPublisher pattern:
             }
         }
         stage("Docker Build Image"){
