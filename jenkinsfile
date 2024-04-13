@@ -6,6 +6,10 @@ pipeline{
     }
     environment {
         SCANNER_HOME=tool 'sonar-scanner'
+        DATE = new Date().format('yy.M')
+        TAG = "${DATE}.${BUILD_NUMBER}"
+        DOCKER_BUILDKIT='1'
+        APP_NAME = "Game_App"
     }
     stages{
         stage("clean workspace"){
@@ -38,13 +42,20 @@ pipeline{
                 }
             } 
         }
+        stage('OWASP FS SCAN') {
+            steps {
+                dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
+                dependencyCheckPublisher pattern:
+            }
+        }
         stage("Docker Build Image"){
             steps{
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
-                       sh "docker build -t gameapp ."
-                       sh "docker tag gameapp lloyddigital/gameapp:latest "
-                       sh "docker push lloyddigital/gameapp:latest "
+                       //sh "docker build -t gameapp ."
+                       sh 'docker build --build-arg BUILD_ENV=test -t lloyddigital/gameapp:${TAG} .'
+                       sh "docker tag gameapp lloyddigital/gameapp:${TAG} "
+                       sh "docker push lloyddigital/gameapp:${TAG} "
                     }
                 }
             }
