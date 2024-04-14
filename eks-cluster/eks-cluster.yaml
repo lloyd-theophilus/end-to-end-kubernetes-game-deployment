@@ -1,0 +1,15 @@
+---
+apiVersion: eksctl.io/v1beta1
+kind: ClusterConfig
+
+metadata:
+  name: Three-Tier-K8s-game-cluster             # define the name of your cluster
+  region: eu-west-2             # mention the region
+  tags:
+    project: game-app
+
+nodeGroups:
+  - name: worker-node
+    instanceType: t2.medium     # change the instance type based on your usecase
+    nodes-min: 2 
+    nodes-max: 2
