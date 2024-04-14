@@ -73,7 +73,7 @@ pipeline{
         stage('Deploy to Kubernetes'){
             steps{
                 script{
-                        withKubeConfig(caCertificate: '', region: 'eu-west-2', clusterName: 'K8s-game-cluster', credentialsId: 'aws-credentials', namespace: 'dev', restrictKubeConfigAccess: false) {
+                        withKubeConfig(caCertificate: '', region: 'eu-west-2', clusterName: 'K8s-game-cluster', credentialsId: 'k8-credentials', namespace: 'dev', restrictKubeConfigAccess: false) {
                                 sh 'kubectl apply -f k8.yml'
                         }   
                 }
