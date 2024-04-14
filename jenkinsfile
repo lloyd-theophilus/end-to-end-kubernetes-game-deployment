@@ -53,6 +53,12 @@ pipeline{
             }
             
         }
+        stage('Image Scan') {
+            
+            steps {
+                sh 'trivy image --clear-cache --format table -o UM_Assessment.txt --ignore-unfixed --severity LOW,MEDIUM,HIGH,CRITICAL --exit-code 1 gameapp:${TAG}' 
+            }  
+        }
         stage('Push Image') {
            
             steps {
