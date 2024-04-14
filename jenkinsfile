@@ -74,7 +74,7 @@ pipeline{
             steps{
                 script {
                         withAWS(region: 'eu-west-2', credentials: 'aws-credentials') {
-                                sh 'kubectl apply -f k8.yml'
+                                sh 'kubectl apply -f deployment.yaml'
                         }   
                 }
             }
