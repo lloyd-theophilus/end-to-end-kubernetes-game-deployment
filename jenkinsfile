@@ -70,6 +70,14 @@ pipeline{
                 }  
             }
         }
-
+        stage('Deploy to Kubernetes'){
+            steps{
+                script{
+                        withKubeConfig(caCertificate: '', clusterName: 'Three-Tier-K8s-game-cluster', contextName: '', credentialsId: 'aws-credentials', namespace: 'dev', restrictKubeConfigAccess: false, serverUrl: '') {
+                                sh 'kubectl apply -f k8.yml'
+                        }   
+                }
+            }
+        }
     }
 }

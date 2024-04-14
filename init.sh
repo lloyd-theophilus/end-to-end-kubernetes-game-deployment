@@ -1,0 +1,2 @@
+#eksctl create cluster --name Three-Tier-K8s-game-cluster --region eu-west-2 --node-type t2.medium --nodes-min 2 --nodes-max 2
+#aws eks update-kubeconfig --region eu-west-2 --name Three-Tier-K8s-game-Cluster

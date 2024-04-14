@@ -3,10 +3,15 @@ kind: Deployment
 metadata:
   name: game-app
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: game
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
   template:
     metadata:
       labels:
@@ -14,9 +19,11 @@ spec:
     spec:
       containers:
         - name: game
-          image: your-image-name
+          image: lloyddigital/gameapp:${TAG}
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
+          protocol: TCP
           resources:
           limits:
             cpu: "500m" # Maximum of 0.5 CPU cores
@@ -24,7 +31,13 @@ spec:
           requests:
             cpu: "200m" # Request 0.2 CPU cores
             memory: "256Mi" # Request 256MB memory
-
+      imagePullSecrets:
+        - name: docker
+      restartPolicy: Always
+      volumes:
+        - name: cache-volume
+          emptyDir:
+            sizeLimit: 500Mi
 ---
 
 apiVersion: v1
@@ -38,4 +51,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 3000
-  type: LoadBalancer
+  type: ClusterIP #NodePort
