@@ -49,7 +49,7 @@ pipeline{
         }
         stage("Docker Build Image"){
             steps{
-                sh 'docker build --build-arg BUILD_ENV=test -t lloyddigital/gameapp:${TAG} .'
+                sh 'docker build -t gameapp:${TAG} .'
             }
             
         }
