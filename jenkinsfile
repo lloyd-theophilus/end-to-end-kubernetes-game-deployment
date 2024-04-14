@@ -72,8 +72,8 @@ pipeline{
         }
         stage('Deploy to Kubernetes'){
             steps{
-                script{
-                        withAWS(region: 'eu-west-2', clusterName: 'K8s-game-cluster', credentials: 'aws-credentials', namespace: 'dev') {
+                script {
+                        withAWS(region: 'eu-west-2', credentials: 'aws-credentials') {
                                 sh 'kubectl apply -f k8.yml'
                         }   
                 }
