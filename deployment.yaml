@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -24,13 +25,13 @@ spec:
           ports:
             - containerPort: 3000
           protocol: TCP
-          resources:
+          resources: 
           limits:
-            cpu: "500m" # Maximum of 0.5 CPU cores
-            memory: "512Mi" # Maximum of 512MB memory
+            cpu: 500m
+            memory: 512Mi
           requests:
-            cpu: "200m" # Request 0.2 CPU cores
-            memory: "256Mi" # Request 256MB memory
+            cpu: 200m
+            memory: 256Mi
       imagePullSecrets:
         - name: docker
       restartPolicy: Always
@@ -39,20 +40,20 @@ spec:
           emptyDir:
             sizeLimit: 500Mi
           env:
-          - name: POD_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-          - name: POD_NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.namespace
-          - name: POD_IP
-            valueFrom:
-              fieldRef:
-                fieldPath: status.podIP
----
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
 
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -64,4 +65,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 3000
-  type: ClusterIP #NodePort
+  type: ClusterIP
