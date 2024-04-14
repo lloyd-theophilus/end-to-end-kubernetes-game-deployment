@@ -58,7 +58,7 @@ pipeline{
             steps {
                script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
-                      sh "docker tag gameapp lloyddigital/gameapp:${TAG} "
+                      sh "docker tag gameapp:${TAG} lloyddigital/gameapp:${TAG} "
                       sh "docker push lloyddigital/gameapp:${TAG} "
                     }
                 }  
