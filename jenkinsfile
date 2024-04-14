@@ -56,11 +56,12 @@ pipeline{
         stage('Push Image') {
            
             steps {
-                sh 'docker login --username=$DOCKERUHB_USER --password=$DOCKERHUB_PASS'
-                sh "docker tag gameapp lloyddigital/gameapp:${TAG} "
-                sh "docker push lloyddigital/gameapp:${TAG} "
-                
-                
+               script{
+                   withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
+                      sh "docker tag gameapp lloyddigital/gameapp:${TAG} "
+                      sh "docker push lloyddigital/gameapp:${TAG} "
+                    }
+                }  
             }
         }
 
