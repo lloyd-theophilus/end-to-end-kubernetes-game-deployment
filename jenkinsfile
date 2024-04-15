@@ -3,6 +3,7 @@ pipeline{
 
     tools {
         nodejs 'node21'
+        jdk 'jdk17'
     }
     environment {
         SCANNER_HOME=tool 'sonar-scanner'
@@ -75,7 +76,7 @@ pipeline{
                 sh 'docker run -d --name gameapp -p 3000:3000 lloyddigital/gameapp:${TAG}'
             }
         }
-        /* 
+        
         stage('Deploy to Kubernetes'){
             steps{
                 script {
@@ -85,6 +86,6 @@ pipeline{
                 }
             }
         }
-        */
+        
     }
 }
