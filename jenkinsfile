@@ -70,6 +70,12 @@ pipeline{
                 }  
             }
         }
+        stage('Deploy to container'){
+            steps{
+                sh 'docker run -d --name gameapp:${TAG} -p 3000:3000 lloyddigital/gameapp:${TAG}'
+            }
+        }
+        /* 
         stage('Deploy to Kubernetes'){
             steps{
                 script {
@@ -79,5 +85,6 @@ pipeline{
                 }
             }
         }
+        */
     }
 }
