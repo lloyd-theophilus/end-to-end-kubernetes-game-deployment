@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: react-app-deployment
 spec:
-  replicas: 3  # Adjust the number of replicas as needed
+  replicas: 2  # Adjust the number of replicas as needed
   selector:
     matchLabels:
       app: game-app
@@ -23,7 +23,7 @@ spec:
             memory: "512Mi"
           requests:
             cpu: "500m"
-            memory: "256Mi"  # The port your React app is listening on
+            memory: "256Mi"  
 
 ---
 apiVersion: v1
