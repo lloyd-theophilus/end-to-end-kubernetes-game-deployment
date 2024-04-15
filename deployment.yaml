@@ -1,47 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: game-app
-  namespace: dev
-  labels:
-    app: game
+  name: react-app-deployment
 spec:
-  replicas: 2
+  replicas: 3  # Adjust the number of replicas as needed
   selector:
     matchLabels:
-      app: game
+      app: game-app
   template:
     metadata:
       labels:
-        app: game
+        app: game-app
     spec:
       containers:
-      - name: game
-        image: lloyddigital/gameapp:${TAG}  
-        ports:
-        - containerPort: 3000
-          protocol: TCP
-        resources:
+        - name: game-app
+          image: lloyddigital/gameapp:${TAG}   # Use your actual Docker image name and tag
+          ports:
+            - containerPort: 3000
+          resources:
           limits:
             cpu: "800m"
             memory: "512Mi"
           requests:
             cpu: "500m"
-            memory: "256Mi"
-        imagePullPolicy: Always
-      resources:
-          limits:
-            cpu: "500m"
-            memory: "128Mi"
-          requests:
-            cpu: "250m"
-            memory: "100Mi"
-      restartPolicy: Always
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 25%
-      maxSurge: 25%
+            memory: "256Mi"  # The port your React app is listening on
 
 ---
 apiVersion: v1
@@ -50,9 +32,9 @@ metadata:
   name: game-service
 spec:
   selector:
-    app: game
+    app: game-app
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 3000
-  type: ClusterIP
+      port: 80  # The port exposed by the service within the cluster
+      targetPort: 3000  # The port your React app is listening on inside the pod
+  type: LoadBalancer
