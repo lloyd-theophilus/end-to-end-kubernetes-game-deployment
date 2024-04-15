@@ -31,13 +31,6 @@ spec:
             requests:
               cpu: 200m
               memory: 256Mi
-      imagePullSecrets:
-        - name: docker
-      restartPolicy: Always
-      volumes:
-        - name: cache-volume
-          emptyDir:
-            sizeLimit: 500Mi
         
 ---
 apiVersion: v1
